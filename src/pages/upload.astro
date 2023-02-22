@@ -26,7 +26,7 @@ import { Layout } from "@globals"
 			<div>
 				<a
 					class="p-6 rounded-full text-2xl bg-green-200 shadow-2xl flex flex-col text-center transition duration-250 hover:-translate-y-2"
-					>📤 Upload</a
+					id="upload">📤 Upload</a
 				>
 			</div>
 		</div>
@@ -44,6 +44,26 @@ input.addEventListener('change',()=>{
 		imagesArray.push(file)
 		})
 	console.log(imagesArray)
+})
+
+const upload=document.getElementById("upload")
+
+upload.addEventListener('click',()=>{
+
+	var myHeaders = new Headers();
+	myHeaders.append("Content-Type", "application/json");
+
+	var requestOptions = {
+	  method: 'POST',
+	  headers: myHeaders,
+	  body: imagesArray,
+	  redirect: 'follow'
+	};
+
+	fetch("/.netlify/functions/upload-photos", requestOptions)
+	  .then(response => response.text())
+	  .then(result => console.log(result))
+	  .catch(error => console.log('error', error));
 })
 
 </script>
