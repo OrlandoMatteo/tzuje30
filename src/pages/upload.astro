@@ -1,0 +1,49 @@
+---
+// Component imports
+import { Layout } from "@globals"
+---
+
+<Layout title="Tzuje goes 30" ogTitle="Guestbook for the Tzuje goes 30 party">
+	<section class="p-6 flex-1 flex flex-col justify-between">
+		<div class="justify-center flex-1 space-y-10">
+			<a
+				class="absolute top-2 left-2 p-4 rounded-full bg-green-200 shadow-2xl flex flex-col text-center transition duration-250 hover:-translate-y-2"
+				href="/">&#129044 Torna alla home</a
+			>
+			<div class="space-y-2 text-center">
+				<h1 class="text-6xl font-semibold">Carica le tue foto</h1>
+				<h1 class="text-6xl font-semibold text-gray-200">Tzujiose</h1>
+			</div>
+
+			<div>
+				<input
+					class="p-6 rounded-full text-md bg-green-200 shadow-2xl text-center transition duration-250 hover:-translate-y-2"
+					id="multiple_files"
+					type="file"
+					multiple
+				/>
+			</div>
+			<div>
+				<a
+					class="p-6 rounded-full text-2xl bg-green-200 shadow-2xl flex flex-col text-center transition duration-250 hover:-translate-y-2"
+					>📤 Upload</a
+				>
+			</div>
+		</div>
+	</section>
+</Layout>
+
+
+<script>
+const input = document.querySelector("input")
+let imagesArray=[]
+
+input.addEventListener('change',()=>{
+	let files=input.files
+	Array.from(files).forEach(function(file){
+		imagesArray.push(file)
+		})
+	console.log(imagesArray)
+})
+
+</script>
