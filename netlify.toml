@@ -3,3 +3,6 @@
 
 [dev]
  command="pnpm run dev"
+
+[functions]
+node_bundler = "esbuild"

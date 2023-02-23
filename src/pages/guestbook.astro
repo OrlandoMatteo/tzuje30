@@ -1,31 +1,10 @@
 ---
 // Component imports
 import { Layout } from "@globals"
-
-
-const photos = [
-	"https://picsum.photos/200",
-	"https://picsum.photos/250",
-	"https://picsum.photos/300",
-	"https://picsum.photos/350",
-	"https://picsum.photos/400",
-	"https://picsum.photos/200",
-	"https://picsum.photos/200",
-	"https://picsum.photos/200",
-	"https://picsum.photos/200",
-	"https://picsum.photos/200",
-	"https://picsum.photos/200",
-	"https://picsum.photos/200",
-	"https://picsum.photos/200",
-	"https://picsum.photos/200",
-	"https://picsum.photos/200",
-	"https://picsum.photos/200",
-	"https://picsum.photos/200",
-	"https://picsum.photos/200",
-	"https://picsum.photos/200",
-	"https://picsum.photos/200",
-	"https://picsum.photos/200"
-]
+const response=await fetch("/.netlify/functions/load-photos")
+//const response=await fetch("http://localhost:8888/.netlify/functions/load-photos")
+const data = await response.json();
+const photos = data.files;
 ---
 
 <Layout title="Tzuje goes 30" ogTitle="Guestbook for the Tzuje goes 30 party">
@@ -39,16 +18,18 @@ const photos = [
 				<h1 class="text-6xl font-semibold">Foto molto</h1>
 				<h1 class="text-6xl font-semibold text-gray-200">Tzujiose</h1>
 			</div>
-			<div class="grid grid-cols-3 md:grid-cols-6 justify-items-center">
+			<div class="grid grid-cols-3 gap-2 md:grid-cols-6 justify-items-center">
 				{
-					photos.map((photo, i) => (
+					photos.map((photo:string, i:number) => (
+						<div class="bg-green-100 rounded-2xl flex justify-items-center">
 						<img
 							data-modal-target="defaultModal"
 							data-modal-toggle="defaultModal"
-							class="rounded-2xl p-2 w-96"
+							class="w-96 rounded-2xl m-auto"
 							id={i.toString()}
 							src={photo}
 						/>
+						</div>
 					))
 				}
 			</div>

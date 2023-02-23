@@ -1,0 +1,11 @@
+{
+  "name": "functions",
+  "version": "1.0.0",
+  "description": "",
+  "main": "load-photos.js",
+  "scripts": {},
+  "author": "",
+  "dependencies": {
+    "firebase-app": "^0.0.1"
+  }
+}
