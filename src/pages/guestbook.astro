@@ -1,10 +1,12 @@
 ---
 // Component imports
 import { Layout } from "@globals"
-const response=await fetch("/.netlify/functions/load-photos")
-//const response=await fetch("http://localhost:8888/.netlify/functions/load-photos")
-const data = await response.json();
-const photos = data.files;
+const response = await fetch("/.netlify/functions/load-photos")
+//const response = await fetch(
+//	"http://localhost:8888/.netlify/functions/load-photos"
+//)
+const data = await response.json()
+const photos = data.resources
 ---
 
 <Layout title="Tzuje goes 30" ogTitle="Guestbook for the Tzuje goes 30 party">
@@ -20,15 +22,14 @@ const photos = data.files;
 			</div>
 			<div class="grid grid-cols-3 gap-2 md:grid-cols-6 justify-items-center">
 				{
-					photos.map((photo:string, i:number) => (
-						<div class="bg-green-100 rounded-2xl flex justify-items-center">
-						<img
-							data-modal-target="defaultModal"
-							data-modal-toggle="defaultModal"
-							class="w-96 rounded-2xl m-auto"
-							id={i.toString()}
-							src={photo}
-						/>
+					photos.map((photo) => (
+						<div class=" flex aspect-square justify-items-center rounded-2xl bg-white bg-opacity-20">
+							<img
+								data-modal-target="defaultModal"
+								data-modal-toggle="defaultModal"
+								class="m-auto h-full rounded-2xl object-scale-down"
+								src={photo.url}
+							/>
 						</div>
 					))
 				}
@@ -41,7 +42,7 @@ const photos = data.files;
 			>
 				<div class="relative w-full h-full max-w-2xl md:h-auto">
 					<!-- Modal content -->
-					<div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+					<div class="relative rounded-lg shadow bg-tzuje">
 						<!-- Modal header -->
 						<div
 							class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600"
@@ -66,7 +67,7 @@ const photos = data.files;
 							</button>
 						</div>
 						<!-- Modal body -->
-						<div class="p-6 space-y-6">
+						<div class="p-2 space-y-2">
 							<img src="" id="modal-img" class="w-full" />
 						</div>
 					</div>
@@ -79,7 +80,6 @@ const photos = data.files;
 <script>
 	import { Modal } from "flowbite"
 	const images = document.querySelectorAll("img")
-
 
 	// select the two elements that we'll work with
 	const $buttonElement: HTMLElement | null = document.querySelector("#button")
@@ -96,7 +96,7 @@ const photos = data.files;
 	images.forEach((image) => {
 		image.addEventListener("click", (event) => {
 			let modalIMG = document.getElementById("modal-img")
-			modalIMG.src=event.target.src
+			modalIMG.src = event.target.src
 		})
 	})
 </script>

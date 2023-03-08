@@ -33,37 +33,40 @@ import { Layout } from "@globals"
 	</section>
 </Layout>
 
-
 <script>
-const input = document.querySelector("input")
-let imagesArray=[]
-
-input.addEventListener('change',()=>{
-	let files=input.files
-	Array.from(files).forEach(function(file){
-		imagesArray.push(file)
+	const readFile = (file) => {
+		return new Promise((resolve, reject) => {
+			const reader = new FileReader()
+			reader.onload = () => {
+				resolve(reader.result)
+			}
+			reader.onerror = reject
+			reader.readAsDataURL(file)
 		})
-	console.log(imagesArray)
-})
+	}
+	const input = document.querySelector("input")
+	let image
 
-const upload=document.getElementById("upload")
+	input.addEventListener("change", async () => {})
 
-upload.addEventListener('click',()=>{
+	const upload = document.getElementById("upload")
 
-	var myHeaders = new Headers();
-	myHeaders.append("Content-Type", "application/json");
+	upload.addEventListener("click", async () => {
+		for (var i = 0; i < input.files.length; i++) {
+			image = await readFile(input.files[i])
+			var requestOptions = {
+				method: "POST",
+				body: image
+			}
 
-	var requestOptions = {
-	  method: 'POST',
-	  headers: myHeaders,
-	  body: imagesArray,
-	  redirect: 'follow'
-	};
-
-	fetch("/.netlify/functions/upload-photos", requestOptions)
-	  .then(response => response.text())
-	  .then(result => console.log(result))
-	  .catch(error => console.log('error', error));
-})
-
+			fetch(
+				//"http://localhost:8888/.netlify/functions/upload-photos",
+				"/.netlify/functions/upload-photos",
+				requestOptions
+			)
+				.then((response) => response.text())
+				.then((result) => console.log(result))
+				.catch((error) => console.log("error", error))
+		}
+	})
 </script>
